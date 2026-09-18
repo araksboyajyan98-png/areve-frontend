@@ -1,5 +1,5 @@
 import { ContactForm } from "@/features/ContactForm";
-import { PHONE_1_TEL, PHONE_2_TEL } from "@/shared/config";
+import { MAP_EMBED_URL, MAP_LINK_URL, PHONE_1_TEL, PHONE_2_TEL } from "@/shared/config";
 import { useT } from "@/shared/i18n";
 import { Container, Section } from "@/shared/ui";
 import { ClockIcon, MailIcon, PhoneIcon, PinIcon } from "@/shared/ui/icons";
@@ -45,11 +45,36 @@ export const Contact = () => {
             </li>
           </ul>
 
-          {/* Место под карту: центр даст её позже. */}
-          <div className="mt-6 flex h-40 items-center justify-center gap-2 rounded-card border border-dashed border-line text-sm text-ink-soft">
-            <PinIcon className="h-5 w-5" />
-            {t("contact.mapPlaceholder")}
+          {/*
+            Карта грузится лениво: раздел контактов внизу страницы, и встройка
+            Google тянет заметный объём. Пока родитель до неё не доскроллил,
+            она не стоит ему ничего.
+          */}
+          <div className="mt-6 overflow-hidden rounded-card border border-line">
+            <iframe
+              src={MAP_EMBED_URL}
+              title={t("contact.mapTitle")}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+              className="block h-56 w-full border-0"
+            />
           </div>
+
+          {/*
+            Ссылка рядом с картой, а не вместо неё: на телефоне она открывает
+            приложение Google Maps, где сразу строится маршрут. Встроенная
+            карта этого не умеет.
+          */}
+          <a
+            href={MAP_LINK_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-accent-deep hover:underline"
+          >
+            <PinIcon className="h-4 w-4" />
+            {t("contact.openInMaps")}
+          </a>
         </div>
 
         <ContactForm />

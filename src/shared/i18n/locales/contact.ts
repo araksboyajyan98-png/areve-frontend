@@ -18,7 +18,8 @@ export const contact = defineSection({
     phone2: "094 505 552",
     email: "info@areve-kids.am",
     hours: "Երկուշաբթի–Ուրբաթ, 08:00–18:00",
-    mapPlaceholder: "Քարտեզի տեղամաս",
+    mapTitle: "«Արևէ» կենտրոնի քարտեզը",
+    openInMaps: "Բացել Google Maps-ում",
 
     nameLabel: "Անուն",
     namePlaceholder: "Ձեր անունը",
