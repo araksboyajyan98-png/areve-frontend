@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Палитра перенесена из areve-mankapartez.html.
+ * Формат "R G B" без rgb(), чтобы работала прозрачность: bg-canvas/50.
+ * Новый цвет добавляется в обе темы и в tailwind.config.js.
+ */
+@layer base {
+  :root,
+  :root[data-theme="light"] {
+    --color-canvas: 250 247 239; /* #FAF7EF cream */
+    --color-canvas-tint: 238 228 206; /* #EEE4CE cream-deep */
+    --color-surface: 255 253 248; /* #FFFDF8 white */
+    --color-ink: 55 50 43; /* #37322B */
+    --color-ink-soft: 110 100 85; /* #6E6455 */
+    --color-line: 222 210 183; /* #DED2B7 */
+    --color-accent: 201 122 72; /* #C97A48 orange */
+    --color-accent-deep: 168 94 53; /* #A85E35 orange-deep */
+    --color-sage: 139 148 115; /* #8B9473 */
+    --color-sage-deep: 105 116 90; /* #69745A */
+    color-scheme: light;
+  }
+
+  /*
+   * Тёмная тема НЕ решена — см. fe/docs/architecture.md, раздел 13.
+   * Значения намеренно повторяют светлые: механизм из скелета на месте,
+   * но пока никто не выбрал тёмный вариант тёплой кремовой палитры,
+   * показывать самодельный было бы хуже, чем не показывать ничего.
+   * Когда решение будет — меняются только значения в этом блоке.
+   */
+  :root[data-theme="dark"] {
+    --color-canvas: 250 247 239;
+    --color-canvas-tint: 238 228 206;
+    --color-surface: 255 253 248;
+    --color-ink: 55 50 43;
+    --color-ink-soft: 110 100 85;
+    --color-line: 222 210 183;
+    --color-accent: 201 122 72;
+    --color-accent-deep: 168 94 53;
+    --color-sage: 139 148 115;
+    --color-sage-deep: 105 116 90;
+    color-scheme: light;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background-color: rgb(var(--color-canvas));
+    color: rgb(var(--color-ink));
+    @apply font-sans leading-relaxed antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-heading font-semibold leading-tight;
+  }
+
+  /* Кому важно меньше движения — убираем плавную прокрутку по якорям. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
