@@ -15,8 +15,15 @@ export const WHATSAPP_URL = "https://wa.me/37495313633";
 export const PHONE_1_TEL = "+37495313633";
 export const PHONE_2_TEL = "+37494505552";
 
-export const FACEBOOK_URL = "https://facebook.com/areve.kids";
-export const INSTAGRAM_URL = "https://instagram.com/areve.kids";
+/*
+ * Настоящие страницы центра, получены 20.09.2026.
+ * Адрес Facebook длинный, потому что название страницы армянское и попало
+ * в него в закодированном виде — так его отдаёт сам Facebook, сокращать нельзя.
+ */
+export const FACEBOOK_URL =
+  "https://www.facebook.com/p/%D4%B1%D6%80%D6%87%D5%A7-%D5%A5%D6%80%D5%A5%D5%AD%D5%A1%D5%B6%D5%A5%D6%80%D5%AB-%D5%A6%D5%A2%D5%A1%D5%B2%D5%B4%D5%B8%D6%82%D5%B6%D6%84%D5%AB-%D5%AF%D5%A5%D5%B6%D5%BF%D6%80%D5%B8%D5%B6-61581118524761/";
+
+export const INSTAGRAM_URL = "https://www.instagram.com/arevecenter/";
 
 /*
  * Карта.

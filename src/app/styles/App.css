@@ -28,8 +28,6 @@
     --container: 1120px;
     /* фон шапки: у оригинала он чуть теплее, чем --cream */
     --header-bg: rgba(246, 241, 230, 0.92);
-    /* заливка выделенного тарифа — отдельный цвет, не --sage-deep */
-    --plan-solid: #767e62;
     color-scheme: light;
   }
 
@@ -51,7 +49,6 @@
     --sage-deep: #69745a;
     --line: #ded2b7;
     --header-bg: rgba(246, 241, 230, 0.92);
-    --plan-solid: #767e62;
     color-scheme: light;
   }
 
@@ -756,18 +753,42 @@
   .plan-card.tint {
     background: var(--white);
   }
+  /* Выделенный тариф — брендовым оранжевым. */
   .plan-card.solid {
-    background: var(--plan-solid);
+    background: var(--orange-deep);
     color: var(--white);
     border-color: transparent;
   }
   .plan-card h3 {
     font-size: 1.3rem;
   }
+  /*
+   * Время — главное, чем тарифы отличаются друг от друга, поэтому оно
+   * набрано крупно и тем же шрифтом, что заголовки.
+   */
   .plan-card .hours {
-    margin-top: 0.3rem;
-    font-weight: 600;
-    opacity: 0.85;
+    margin-top: 0.4rem;
+    font-family: "Noto Serif Armenian", serif;
+    font-size: clamp(1.45rem, 2.6vw, 1.85rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .plan-card.tint .hours {
+    color: var(--orange-deep);
+  }
+  .plan-card.solid .hours {
+    color: var(--white);
+  }
+  /*
+   * На оранжевой карточке обычное наведение светлой кнопки залило бы её
+   * тем же оранжевым — кнопка растворилась бы в фоне. Здесь она,
+   * наоборот, светлеет.
+   */
+  .plan-card.solid .btn-white:hover {
+    background: var(--cream);
+    color: var(--orange-deep);
+    border-color: var(--cream);
   }
   .plan-card ul {
     margin-top: 1.2rem;
