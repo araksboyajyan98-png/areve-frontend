@@ -35,23 +35,27 @@ export const Footer = () => {
             ))}
           </nav>
 
-          <div className="footer-social">
-            <a
-              href={FACEBOOK_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={t("footer.facebookAria")}
-            >
-              <FacebookIcon />
-            </a>
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={t("footer.instagramAria")}
-            >
-              <InstagramIcon />
-            </a>
+          <div className="footer-social-block">
+            <span className="footer-social-label">{t("footer.followUs")}</span>
+
+            <div className="footer-social">
+              <a
+                href={FACEBOOK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={t("footer.facebookAria")}
+              >
+                <FacebookIcon />
+              </a>
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={t("footer.instagramAria")}
+              >
+                <InstagramIcon />
+              </a>
+            </div>
           </div>
         </div>
 
