@@ -182,8 +182,11 @@
     background: var(--cream);
     color: var(--sage-deep);
   }
+  /* Наведение как у главной кнопки в hero: подъём вместе с тенью.
+     В оригинале тени здесь не было — кнопка просто дёргалась вверх. */
   .btn-on-dark:hover {
     transform: translateY(-2px);
+    box-shadow: 0 10px 20px -10px rgba(181, 102, 58, 0.55);
   }
   .btn:disabled {
     cursor: not-allowed;
@@ -738,9 +741,11 @@
   }
 
   /* ---------- тарифы ---------- */
+  /* Три тарифа вместо двух: в ряд, а на узком экране столбцом.
+     Двух колонок нет намеренно — третья карточка осталась бы одна. */
   .plans-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.4rem;
   }
   .plan-card {
@@ -778,7 +783,7 @@
   .plan-card .btn {
     margin-top: 1.6rem;
   }
-  @media (max-width: 720px) {
+  @media (max-width: 960px) {
     .plans-grid {
       grid-template-columns: 1fr;
     }
