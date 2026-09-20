@@ -307,9 +307,28 @@
     display: block;
     width: 24px;
     height: 2px;
-    background: var(--ink);
-    margin: 5px 0;
+    background: var(--orange-deep);
+    /* auto по бокам — короткая средняя черта встаёт по центру значка. */
+    margin: 5px auto;
     border-radius: 2px;
+    transition: width 0.25s ease;
+  }
+  /* Средняя короче: значок читается как «меню», а не как три равные черты. */
+  .nav-burger span:nth-child(2) {
+    width: 15px;
+  }
+  /*
+   * При открытом меню средняя черта вытягивается до полной длины.
+   * Состояние берётся из aria-expanded, который кнопка и так выставляет
+   * для скринридера, — отдельный класс завёл бы второй источник правды.
+   */
+  .nav-burger[aria-expanded="true"] span:nth-child(2) {
+    width: 24px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-burger span {
+      transition: none;
+    }
   }
 
   @media (max-width: 640px) {
