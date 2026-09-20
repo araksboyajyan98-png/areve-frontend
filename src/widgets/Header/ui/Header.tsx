@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useT } from "@/shared/i18n";
 import { cn } from "@/shared/lib";
 import { Container } from "@/shared/ui";
+import { useHeaderHeight } from "../model/useHeaderHeight";
 
 const LINKS = [
   { href: "#routine", key: "nav.routine" },
@@ -10,9 +11,17 @@ const LINKS = [
   { href: "#nutrition", key: "nav.nutrition" },
 ] as const;
 
+/*
+ * Шапка в столбец: меню сверху, под ним логотип с подписью — всё по центру.
+ * Порядок в разметке совпадает с порядком на экране, чтобы обход
+ * с клавиатуры шёл так же, как читает глаз.
+ */
 export const Header = () => {
   const t = useT();
   const [open, setOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useHeaderHeight(headerRef);
 
   /*
    * В оригинале меню держалось на чекбоксе — с ним нельзя закрыть по Escape
@@ -29,12 +38,8 @@ export const Header = () => {
   }, [open]);
 
   return (
-    <header className="site-header">
+    <header className="site-header" ref={headerRef}>
       <Container className="nav-row">
-        <a className="brand" href="#hero" aria-label={t("nav.brandAria")}>
-          <img className="logo-wordmark" src="/images/logo.webp" alt="Արևէ" width={124} height={80} />
-        </a>
-
         <button
           type="button"
           className="nav-burger"
@@ -59,6 +64,11 @@ export const Header = () => {
             <strong>{t("nav.contact")}</strong>
           </a>
         </nav>
+
+        <a className="brand" href="#hero" aria-label={t("nav.brandAria")}>
+          <img className="logo-wordmark" src="/images/logo.webp" alt="Արևէ" width={124} height={80} />
+          <span className="brand-tagline">{t("nav.tagline")}</span>
+        </a>
       </Container>
     </header>
   );

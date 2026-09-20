@@ -3,6 +3,8 @@ import { defineSection } from "./defineSection";
 export const nav = defineSection({
   hy: {
     brandAria: "Արևէ, գլխավոր էջ",
+    /** Подпись под логотипом в шапке. */
+    tagline: "Երևեխաների զբաղմունքի կենտրոն",
     about: "Մեր մասին",
     routine: "Մեր զբաղմունքները",
     terms: "Պայմաններ",
