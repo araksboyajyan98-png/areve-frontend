@@ -23,8 +23,8 @@ export const Footer = () => {
               className="logo-wordmark logo-wordmark-footer"
               src="/images/logo-footer.webp"
               alt="Արևէ"
-              width={124}
-              height={80}
+              width={187}
+              height={120}
             />
           </a>
 

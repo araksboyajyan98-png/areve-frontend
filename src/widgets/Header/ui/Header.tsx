@@ -84,7 +84,7 @@ export const Header = () => {
         <span className="nav-divider" aria-hidden="true" />
 
         <a className="brand" href="#hero" aria-label={t("nav.brandAria")}>
-          <img className="logo-wordmark" src="/images/logo.webp" alt="Արևէ" width={124} height={80} />
+          <img className="logo-wordmark" src="/images/logo.webp" alt="Արևէ" width={187} height={120} />
           <span className="brand-tagline">{t("nav.tagline")}</span>
         </a>
       </Container>

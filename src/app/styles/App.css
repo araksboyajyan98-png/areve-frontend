@@ -258,11 +258,11 @@
     background: var(--line);
   }
   .logo-wordmark {
-    height: 42px;
+    height: 52px;
     width: auto;
     object-fit: contain;
   }
-  /* В подвале логотип крупнее, чем в шапке: было 49px, стало на 16% больше. */
+  /* В подвале логотип чуть крупнее, чем в шапке. */
   .logo-wordmark-footer {
     height: 57px;
   }
