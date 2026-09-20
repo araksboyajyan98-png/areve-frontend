@@ -1,6 +1,5 @@
 import { useT } from "@/shared/i18n";
 import { WHATSAPP_URL } from "@/shared/config";
-import { cn } from "@/shared/lib";
 import { ButtonLink, Container, Section, SectionHead } from "@/shared/ui";
 import { PLANS } from "../config/plans";
 
@@ -14,7 +13,7 @@ export const Terms = () => {
 
         <div className="plans-grid">
           {PLANS.map((plan) => (
-            <div key={plan.title} className={cn("plan-card", plan.highlighted ? "solid" : "tint")}>
+            <div className="plan-card" key={plan.title}>
               <h3>{t(plan.title)}</h3>
               <div className="hours">{t(plan.hours)}</div>
 
@@ -27,7 +26,7 @@ export const Terms = () => {
                 ))}
               </ul>
 
-              {/* Цены не публикуются — обе кнопки ведут спросить. */}
+              {/* Цены не публикуются — все кнопки ведут спросить. */}
               <ButtonLink href={WHATSAPP_URL} external variant="white">
                 {t("terms.cta")}
               </ButtonLink>

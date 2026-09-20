@@ -756,14 +756,7 @@
     border: none;
     border-radius: 28px;
     padding: 2rem 1.8rem;
-  }
-  .plan-card.tint {
     background: var(--white);
-  }
-  /* Выделенный тариф — брендовым оранжевым. */
-  .plan-card.solid {
-    background: var(--orange-deep);
-    color: var(--white);
   }
   .plan-card h3 {
     font-size: 1.3rem;
@@ -785,21 +778,6 @@
     font-weight: 700;
     line-height: 1.25;
     white-space: nowrap;
-  }
-  /* На оранжевой карточке плашка выворачивается, иначе сливается с фоном. */
-  .plan-card.solid .hours {
-    background: var(--cream);
-    color: var(--orange-deep);
-  }
-  /*
-   * На оранжевой карточке обычное наведение светлой кнопки залило бы её
-   * тем же оранжевым — кнопка растворилась бы в фоне. Здесь она,
-   * наоборот, светлеет.
-   */
-  .plan-card.solid .btn-white:hover {
-    background: var(--cream);
-    color: var(--orange-deep);
-    border-color: var(--cream);
   }
   .plan-card ul {
     margin-top: 1.2rem;
