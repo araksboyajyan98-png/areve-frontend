@@ -291,6 +291,10 @@
   .nav-links a:hover {
     color: var(--orange-deep);
   }
+  /* Ссылка-звонок нужна только на телефоне; на широком экране её нет. */
+  .nav-cta-phone {
+    display: none;
+  }
 
   .nav-burger {
     display: none;
@@ -340,8 +344,16 @@
       align-self: flex-end;
       margin-block: -0.4rem;
     }
-    .nav-cta {
+    /*
+     * На телефоне «Կապ մեզ հետ» превращается в звонок по первому номеру:
+     * раньше эта ссылка просто пряталась, и из меню нельзя было попасть
+     * к контактам — на самом нужном для лендинга шаге.
+     */
+    .nav-cta-wide {
       display: none;
+    }
+    .nav-cta-phone {
+      display: block;
     }
   }
 

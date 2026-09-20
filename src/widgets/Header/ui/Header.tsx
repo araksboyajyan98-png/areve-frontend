@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { PHONE_1_TEL } from "@/shared/config";
 import { useT } from "@/shared/i18n";
 import { cn } from "@/shared/lib";
 import { Container } from "@/shared/ui";
@@ -60,7 +61,17 @@ export const Header = () => {
             </a>
           ))}
 
-          <a href="#contact" className="nav-cta" onClick={() => setOpen(false)}>
+          {/*
+            Две ссылки вместо подстановки адреса через скрипт: показ решают
+            стили, и граница 640px остаётся в одном месте. Скрытая ссылка
+            убрана из обхода по Tab и от скринридера — display: none.
+          */}
+          <a href="#contact" className="nav-cta nav-cta-wide" onClick={() => setOpen(false)}>
+            <strong>{t("nav.contact")}</strong>
+          </a>
+
+          {/* На телефоне «Կապ մեզ հետ» сразу набирает первый номер центра. */}
+          <a href={`tel:${PHONE_1_TEL}`} className="nav-cta nav-cta-phone" onClick={() => setOpen(false)}>
             <strong>{t("nav.contact")}</strong>
           </a>
         </nav>
