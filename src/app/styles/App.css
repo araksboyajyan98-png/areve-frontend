@@ -1175,6 +1175,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    /* center, а не stretch: иначе кнопка растянулась бы во всю ширину. */
     align-items: center;
     justify-content: center;
     gap: 1rem;
