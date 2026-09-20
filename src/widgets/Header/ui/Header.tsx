@@ -65,6 +65,13 @@ export const Header = () => {
           </a>
         </nav>
 
+        {/*
+          Отдельный элемент, а не рамка у меню или логотипа: у логотипа она
+          потребовала бы растянуть ссылку во всю ширину, и нажатием стала бы
+          пустота по бокам от него.
+        */}
+        <span className="nav-divider" aria-hidden="true" />
+
         <a className="brand" href="#hero" aria-label={t("nav.brandAria")}>
           <img className="logo-wordmark" src="/images/logo.webp" alt="Արևէ" width={124} height={80} />
           <span className="brand-tagline">{t("nav.tagline")}</span>

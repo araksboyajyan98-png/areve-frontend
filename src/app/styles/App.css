@@ -231,6 +231,12 @@
     color: var(--ink-soft);
     line-height: 1.3;
   }
+  /* Тонкая черта между меню и логотипом, во всю ширину полосы. */
+  .nav-divider {
+    align-self: stretch;
+    height: 1px;
+    background: var(--line);
+  }
   .logo-wordmark {
     height: 42px;
     width: auto;
