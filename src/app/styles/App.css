@@ -572,9 +572,15 @@
     .hero-actions {
       justify-content: center;
     }
-    /* max-width абзаца — 34rem; без auto он прижался бы влево. */
+    /*
+     * 13px на всех телефонах — одно значение вместо прежних 12px и 11px
+     * на самых узких. В rem, а не в px: так размер уважает шрифт, выбранный
+     * человеком в настройках браузера.
+     *
+     * max-width абзаца — 34rem; без auto он прижался бы влево.
+     */
     .hero-inner p {
-      font-size: 12px;
+      font-size: 0.8125rem;
       margin-inline: auto;
     }
     .hero-image {
@@ -594,9 +600,6 @@
   @media (max-width: 420px) {
     .hero .container {
       padding-inline: 20px;
-    }
-    .hero-inner p {
-      font-size: 11px;
     }
     .hero-sun {
       top: -6%;
