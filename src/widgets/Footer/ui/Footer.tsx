@@ -10,6 +10,7 @@ const LINKS = [
   { href: "#contact", key: "nav.contact" },
 ] as const;
 
+/** Порядок в строке: логотип, соцсети, карта сайта. */
 export const Footer = () => {
   const t = useT();
 
@@ -26,14 +27,6 @@ export const Footer = () => {
               height={80}
             />
           </a>
-
-          <nav className="footer-links">
-            {LINKS.map((link) => (
-              <a key={link.href} href={link.href}>
-                {t(link.key)}
-              </a>
-            ))}
-          </nav>
 
           <div className="footer-social-block">
             <span className="footer-social-label">{t("footer.followUs")}</span>
@@ -57,6 +50,14 @@ export const Footer = () => {
               </a>
             </div>
           </div>
+
+          <nav className="footer-links">
+            {LINKS.map((link) => (
+              <a key={link.href} href={link.href}>
+                {t(link.key)}
+              </a>
+            ))}
+          </nav>
         </div>
 
         <div className="footer-bottom">{t("footer.copyright")}</div>

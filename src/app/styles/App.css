@@ -227,8 +227,9 @@
     width: auto;
     object-fit: contain;
   }
+  /* В подвале логотип крупнее, чем в шапке: было 49px, стало на 16% больше. */
   .logo-wordmark-footer {
-    height: 49px;
+    height: 57px;
   }
 
   .nav-links {
@@ -1105,10 +1106,17 @@
     flex-wrap: wrap;
     gap: 1.2rem;
   }
+  /* Карта сайта столбцом, по правому краю — это крайний блок строки. */
   .footer-links {
     display: flex;
-    gap: 1.4rem;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
+  @media (max-width: 720px) {
+    .footer-links {
+      align-items: flex-start;
+    }
   }
   .footer-links a {
     text-decoration: none;
@@ -1125,17 +1133,14 @@
   .footer-social-block {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    /* Подпись и иконки выровнены по центру друг относительно друга. */
+    align-items: center;
     gap: 0.6rem;
   }
   .footer-social-label {
     font-size: 0.85rem;
     color: rgba(255, 253, 248, 0.82);
-  }
-  @media (max-width: 720px) {
-    .footer-social-block {
-      align-items: flex-start;
-    }
+    text-align: center;
   }
 
   .footer-social {
