@@ -757,6 +757,21 @@
     border-radius: 28px;
     padding: 2rem 1.8rem;
     background: var(--white);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  /*
+   * Лёгкий отклик на наведение: карточка приподнимается и получает мягкую
+   * тень. Без смены цвета — в отличие от карточек ценностей: там наведение
+   * зовёт прочитать, здесь только показывает, что карточку можно выбрать.
+   */
+  .plan-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 28px -18px rgba(55, 50, 43, 0.4);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .plan-card:hover {
+      transform: none;
+    }
   }
   .plan-card h3 {
     font-size: 1.3rem;
@@ -781,6 +796,8 @@
   }
   .plan-card ul {
     margin-top: 1.2rem;
+    /* Отступ до кнопки задаётся здесь: у самой кнопки margin-top занят. */
+    margin-bottom: 1.6rem;
     display: flex;
     flex-direction: column;
     gap: 0.55rem;
@@ -790,8 +807,17 @@
     gap: 0.6rem;
     font-size: 0.95rem;
   }
+  /*
+   * margin-top: auto прижимает кнопку к низу карточки. Карточки в сетке
+   * растягиваются до общей высоты, поэтому кнопки всех трёх оказываются
+   * на одном уровне — даже когда в списках разное число строк.
+   *
+   * align-self обязателен: карточка — flex-колонка, и без него кнопка
+   * растянулась бы во всю ширину.
+   */
   .plan-card .btn {
-    margin-top: 1.6rem;
+    margin-top: auto;
+    align-self: flex-start;
   }
   @media (max-width: 960px) {
     .plans-grid {
