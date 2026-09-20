@@ -1,6 +1,6 @@
 import { useT } from "@/shared/i18n";
 import { Carousel, Container, type CarouselSlide } from "@/shared/ui";
-import { DrawingSlide, StorySlide } from "./slides";
+import { ABOUT_PHOTOS } from "../config/photos";
 
 /*
  * Секцию <section id="about"> рисует страница: в оригинале внутри неё лежат
@@ -10,35 +10,21 @@ import { DrawingSlide, StorySlide } from "./slides";
 export const About = () => {
   const t = useT();
 
-  // Порядок слайдов как в оригинале: рисунок, фото, рисунок, фото.
-  const slides: CarouselSlide[] = [
-    { content: <DrawingSlide /> },
-    {
-      photo: true,
-      content: (
-        <img
-          src="/images/about-blocks.webp"
-          alt={t("about.slideBlocks")}
-          width={1000}
-          height={666}
-          loading="lazy"
-        />
-      ),
-    },
-    { content: <StorySlide /> },
-    {
-      photo: true,
-      content: (
-        <img
-          src="/images/about-roleplay.webp"
-          alt={t("about.slideRolePlay")}
-          width={1000}
-          height={666}
-          loading="lazy"
-        />
-      ),
-    },
-  ];
+  /*
+   * Слайдов ровно столько, сколько фотографий в папке — вместе с точками.
+   * Рисованных заглушек из лендинга больше нет: они занимали слайды,
+   * за которыми не стоит ни одной настоящей фотографии.
+   */
+  const slides: CarouselSlide[] = ABOUT_PHOTOS.map((photo, i) => ({
+    photo: true,
+    content: (
+      <img
+        src={photo.src}
+        alt={photo.altKey ? t(photo.altKey) : t("about.photoAlt", { n: i + 1 })}
+        loading="lazy"
+      />
+    ),
+  }));
 
   return (
     <Container className="about-grid">
@@ -48,15 +34,18 @@ export const About = () => {
         <p>{t("about.text2")}</p>
       </div>
 
-      <Carousel
-        className="about-carousel"
-        label={t("about.carouselLabel")}
-        prevLabel={t("common.prevSlide")}
-        nextLabel={t("common.nextSlide")}
-        dotLabel={(i) => `${t("about.carouselLabel")} ${i + 1}`}
-        autoPlay
-        slides={slides}
-      />
+      {/* Пустая папка не должна ломать вёрстку — блока просто не будет. */}
+      {slides.length > 0 && (
+        <Carousel
+          className="about-carousel"
+          label={t("about.carouselLabel")}
+          prevLabel={t("common.prevSlide")}
+          nextLabel={t("common.nextSlide")}
+          dotLabel={(i) => t("about.photoAlt", { n: i + 1 })}
+          autoPlay
+          slides={slides}
+        />
+      )}
     </Container>
   );
 };
