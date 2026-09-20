@@ -5,7 +5,7 @@ export const footer = defineSection({
     copyright: "© 2026 Արևէ նախադպրոցական կենտրոն",
 
     // Соцсети появились в обновлённой версии лендинга.
-    followUs: "Հետևեք մեզ սոցիալայան ցանցերում",
+    followUs: "Հետևեք մեզ սոցիալական ցանցերում",
     facebookAria: "Facebook",
     instagramAria: "Instagram",
   },
