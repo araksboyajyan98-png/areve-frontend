@@ -703,6 +703,21 @@
     border: 1px solid var(--line);
     border-radius: var(--card-radius);
     padding: 1.5rem 1.3rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  /*
+   * Тот же лёгкий отклик, что у карточек тарифов: подъём и мягкая тень,
+   * без смены цвета. Карточка не нажимается, и заливка цветом обещала бы
+   * действие, которого нет.
+   */
+  .routine-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 28px -18px rgba(55, 50, 43, 0.4);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .routine-card:hover {
+      transform: none;
+    }
   }
   .routine-card .icon-badge {
     width: 46px;

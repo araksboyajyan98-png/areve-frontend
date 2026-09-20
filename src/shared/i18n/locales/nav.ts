@@ -4,7 +4,7 @@ export const nav = defineSection({
   hy: {
     brandAria: "Արևէ, գլխավոր էջ",
     about: "Մեր մասին",
-    routine: "Մեր առօրյան",
+    routine: "Մեր զբաղմունքները",
     terms: "Պայմաններ",
     testimonials: "Կարծիքներ",
     nutrition: "Սննդակարգ",

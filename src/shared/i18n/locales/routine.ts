@@ -2,7 +2,7 @@ import { defineSection } from "./defineSection";
 
 export const routine = defineSection({
   hy: {
-    title: "Մեր առօրյան",
+    title: "Մեր զբաղմունքները",
 
     arrivalTitle: "Ընդունելություն և ազատ խաղ",
     arrivalText: "Երեխաները ինքնուրույն ընտրում են խաղալիք և կամաց-կամաց ներգրավվում օրվա մեջ։",
