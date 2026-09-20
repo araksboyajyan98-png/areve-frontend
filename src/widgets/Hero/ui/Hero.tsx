@@ -36,8 +36,8 @@ export const Hero = () => {
             <ButtonLink href={WHATSAPP_URL} external>
               {t("hero.ctaVisit")}
             </ButtonLink>
-            <ButtonLink href="#routine" variant="ghost">
-              {t("hero.ctaRoutine")}
+            <ButtonLink href="#terms" variant="ghost">
+              {t("hero.ctaTerms")}
             </ButtonLink>
           </div>
         </div>
