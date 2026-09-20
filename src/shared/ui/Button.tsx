@@ -1,17 +1,13 @@
 import { cn } from "@/shared/lib";
 
-type Variant = "primary" | "ghost" | "white";
+/** Варианты из перенесённых стилей: .btn-primary, .btn-white, .btn-ghost, .btn-on-dark. */
+type Variant = "primary" | "white" | "ghost" | "on-dark";
 
-const base =
-  "inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold " +
-  "transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 " +
-  "focus-visible:outline-accent-deep sm:px-6 sm:py-3";
-
-const variants: Record<Variant, string> = {
-  primary: "bg-accent text-surface hover:bg-accent-deep",
-  ghost: "border border-line text-ink hover:bg-canvas-tint",
-  // на тёмной подложке: светлая кнопка
-  white: "bg-surface text-accent-deep hover:bg-canvas",
+const variantClass: Record<Variant, string> = {
+  primary: "btn-primary",
+  white: "btn-white",
+  ghost: "btn-ghost",
+  "on-dark": "btn-on-dark",
 };
 
 interface ButtonLinkProps {
@@ -35,7 +31,7 @@ export const ButtonLink = ({
     href={href}
     // rel="noopener" обязателен: иначе открытая вкладка получает доступ к window.opener
     {...(external && { target: "_blank", rel: "noopener noreferrer" })}
-    className={cn(base, variants[variant], className)}
+    className={cn("btn", variantClass[variant], className)}
   >
     {children}
   </a>
@@ -48,8 +44,5 @@ interface ButtonProps extends React.ComponentProps<"button"> {
 }
 
 export const Button = ({ variant = "primary", className, ...props }: ButtonProps) => (
-  <button
-    {...props}
-    className={cn(base, variants[variant], "disabled:cursor-not-allowed disabled:opacity-70", className)}
-  />
+  <button {...props} className={cn("btn", variantClass[variant], className)} />
 );

@@ -1,7 +1,7 @@
 /*
  * Иконки перенесены из лендинга как есть.
- * Все рисуются текущим цветом (`currentColor`) и наследуют размер от класса,
- * поэтому цвет задаётся на родителе, а не внутри иконки.
+ * Все рисуются текущим цветом (`currentColor`). Размер задаёт CSS секции:
+ * у ценностей 34px, в распорядке 24px, в контактах 20px.
  */
 
 type IconProps = { className?: string };
@@ -15,7 +15,7 @@ const stroke = {
   strokeLinejoin: "round" as const,
 };
 
-const Svg = ({ className = "h-6 w-6", children }: IconProps & { children: React.ReactNode }) => (
+const Svg = ({ className, children }: IconProps & { children: React.ReactNode }) => (
   <svg {...stroke} className={className} aria-hidden="true">
     {children}
   </svg>
@@ -122,13 +122,13 @@ export const ClockIcon = (p: IconProps) => (
 );
 
 // ── Соцсети ───────────────────────────────────────────────────
-export const FacebookIcon = ({ className = "h-[18px] w-[18px]" }: IconProps) => (
+export const FacebookIcon = ({ className }: IconProps) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
     <path d="M13.5 21v-7.5h2.5l.5-3h-3V8.5c0-.9.25-1.5 1.55-1.5H16.5V4.3c-.27-.04-1.2-.11-2.28-.11-2.26 0-3.8 1.38-3.8 3.9V10.5H8v3h2.42V21h3.08Z" />
   </svg>
 );
 
-export const InstagramIcon = ({ className = "h-[18px] w-[18px]" }: IconProps) => (
+export const InstagramIcon = ({ className }: IconProps) => (
   <svg {...stroke} className={className} aria-hidden="true">
     <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
     <circle cx="12" cy="12" r="4" />

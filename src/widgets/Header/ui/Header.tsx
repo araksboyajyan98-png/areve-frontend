@@ -15,8 +15,9 @@ export const Header = () => {
   const [open, setOpen] = useState(false);
 
   /*
-   * В лендинге меню держалось на чекбоксе — с ним нельзя закрыть по Escape
-   * и нельзя закрыть после перехода по ссылке. Здесь обычное состояние.
+   * В оригинале меню держалось на чекбоксе — с ним нельзя закрыть по Escape
+   * и нельзя закрыть после перехода по ссылке. Здесь обычное состояние,
+   * вид тот же: класс .open раскрывает список по max-height.
    */
   useEffect(() => {
     if (!open) return;
@@ -28,50 +29,34 @@ export const Header = () => {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-canvas/90 backdrop-blur">
-      <Container className="flex items-center justify-between gap-4 py-3">
-        <a href="#hero" aria-label={t("nav.brandAria")} className="shrink-0">
-          <img src="/images/logo.webp" alt="Արևէ" width={124} height={80} className="h-9 w-auto sm:h-10" />
+    <header className="site-header">
+      <Container className="nav-row">
+        <a className="brand" href="#hero" aria-label={t("nav.brandAria")}>
+          <img className="logo-wordmark" src="/images/logo.webp" alt="Արևէ" width={124} height={80} />
         </a>
 
         <button
           type="button"
+          className="nav-burger"
           aria-expanded={open}
           aria-controls="main-nav"
           aria-label={open ? t("common.menuClose") : t("common.menuOpen")}
           onClick={() => setOpen((v) => !v)}
-          className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-lg hover:bg-canvas-tint focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-deep lg:hidden"
         >
-          <span className="h-0.5 w-5 bg-ink" />
-          <span className="h-0.5 w-5 bg-ink" />
-          <span className="h-0.5 w-5 bg-ink" />
+          <span />
+          <span />
+          <span />
         </button>
 
-        <nav
-          id="main-nav"
-          className={cn(
-            "absolute left-0 right-0 top-full flex-col gap-1 border-b border-line bg-canvas p-4",
-            "lg:static lg:flex lg:flex-row lg:items-center lg:gap-6 lg:border-0 lg:bg-transparent lg:p-0",
-            open ? "flex" : "hidden"
-          )}
-        >
+        <nav id="main-nav" className={cn("nav-links", open && "open")}>
           {LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className="whitespace-nowrap rounded px-2 py-2 text-sm text-ink-soft hover:text-ink lg:px-0 lg:py-0"
-            >
+            <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
               {t(link.key)}
             </a>
           ))}
 
-          <a
-            href="#contact"
-            onClick={() => setOpen(false)}
-            className="whitespace-nowrap rounded-full bg-accent px-4 py-2 text-center text-sm font-semibold text-surface hover:bg-accent-deep"
-          >
-            {t("nav.contact")}
+          <a href="#contact" className="nav-cta" onClick={() => setOpen(false)}>
+            <strong>{t("nav.contact")}</strong>
           </a>
         </nav>
       </Container>

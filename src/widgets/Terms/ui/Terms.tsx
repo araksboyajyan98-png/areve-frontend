@@ -12,44 +12,23 @@ export const Terms = () => {
       <Container>
         <SectionHead title={t("terms.title")} text={t("terms.subtitle")} />
 
-        <div className="grid gap-5 sm:grid-cols-2">
+        <div className="plans-grid">
           {PLANS.map((plan) => (
-            <div
-              key={plan.title}
-              className={cn(
-                "flex flex-col rounded-card border p-7",
-                plan.highlighted
-                  ? "border-transparent bg-sage-deep text-canvas"
-                  : "border-line bg-canvas-tint"
-              )}
-            >
-              <h3 className="text-xl">{t(plan.title)}</h3>
+            <div key={plan.title} className={cn("plan-card", plan.highlighted ? "solid" : "tint")}>
+              <h3>{t(plan.title)}</h3>
+              <div className="hours">{t(plan.hours)}</div>
 
-              <div
-                className={cn(
-                  "mt-2 text-2xl font-semibold",
-                  plan.highlighted ? "text-canvas" : "text-accent-deep"
-                )}
-              >
-                {t(plan.hours)}
-              </div>
-
-              <ul className="mt-5 flex-1 space-y-2 text-sm">
+              <ul>
                 {plan.items.map((item) => (
-                  <li key={item} className={plan.highlighted ? "text-canvas/90" : "text-ink-soft"}>
-                    <span aria-hidden="true">✧ </span>
-                    {t(item)}
+                  <li key={item}>
+                    <span aria-hidden="true">✧</span>
+                    <span>{t(item)}</span>
                   </li>
                 ))}
               </ul>
 
               {/* Цены не публикуются — обе кнопки ведут спросить. */}
-              <ButtonLink
-                href={WHATSAPP_URL}
-                external
-                variant={plan.highlighted ? "white" : "primary"}
-                className="mt-7 self-start"
-              >
+              <ButtonLink href={WHATSAPP_URL} external variant="white">
                 {t("terms.cta")}
               </ButtonLink>
             </div>

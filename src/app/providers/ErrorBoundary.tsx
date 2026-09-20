@@ -23,13 +23,9 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, { failed: 
     if (!this.state.failed) return this.props.children;
 
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-4 p-6 text-center">
-        <p className="text-ink-soft">{translate("errors.INTERNAL")}</p>
-        <button
-          type="button"
-          onClick={() => window.location.reload()}
-          className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-surface hover:bg-accent-deep"
-        >
+      <div className="error-screen">
+        <p>{translate("errors.INTERNAL")}</p>
+        <button type="button" className="btn btn-primary" onClick={() => window.location.reload()}>
           {translate("common.reload")}
         </button>
       </div>

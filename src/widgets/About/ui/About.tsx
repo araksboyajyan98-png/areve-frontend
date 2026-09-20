@@ -1,49 +1,62 @@
 import { useT } from "@/shared/i18n";
-import { Carousel, Container, Section } from "@/shared/ui";
+import { Carousel, Container, type CarouselSlide } from "@/shared/ui";
 import { DrawingSlide, StorySlide } from "./slides";
 
-const PHOTO = "h-full w-full object-cover";
-
+/*
+ * Секцию <section id="about"> рисует страница: в оригинале внутри неё лежат
+ * два блока — этот и «наши ценности». Обёртка здесь означала бы двойной
+ * отступ между ними.
+ */
 export const About = () => {
   const t = useT();
 
-  return (
-    <Section id="about">
-      <Container className="grid items-center gap-10 lg:grid-cols-2">
-        <div>
-          <h2 className="text-3xl sm:text-4xl">{t("about.title")}</h2>
-          <p className="mt-5 text-ink-soft">{t("about.text1")}</p>
-          <p className="mt-4 text-ink-soft">{t("about.text2")}</p>
-        </div>
+  // Порядок слайдов как в оригинале: рисунок, фото, рисунок, фото.
+  const slides: CarouselSlide[] = [
+    { content: <DrawingSlide /> },
+    {
+      photo: true,
+      content: (
+        <img
+          src="/images/about-blocks.webp"
+          alt={t("about.slideBlocks")}
+          width={1000}
+          height={666}
+          loading="lazy"
+        />
+      ),
+    },
+    { content: <StorySlide /> },
+    {
+      photo: true,
+      content: (
+        <img
+          src="/images/about-roleplay.webp"
+          alt={t("about.slideRolePlay")}
+          width={1000}
+          height={666}
+          loading="lazy"
+        />
+      ),
+    },
+  ];
 
-        <Carousel
-          label={t("about.carouselLabel")}
-          prevLabel={t("common.prevSlide")}
-          nextLabel={t("common.nextSlide")}
-          dotLabel={(i) => `${t("about.carouselLabel")} ${i + 1}`}
-          autoPlay
-          slideClassName="aspect-[4/3]"
-        >
-          <DrawingSlide />
-          <img
-            src="/images/about-blocks.webp"
-            alt={t("about.slideBlocks")}
-            width={1000}
-            height={666}
-            loading="lazy"
-            className={PHOTO}
-          />
-          <StorySlide />
-          <img
-            src="/images/about-roleplay.webp"
-            alt={t("about.slideRolePlay")}
-            width={1000}
-            height={666}
-            loading="lazy"
-            className={PHOTO}
-          />
-        </Carousel>
-      </Container>
-    </Section>
+  return (
+    <Container className="about-grid">
+      <div className="about-text">
+        <h2>{t("about.title")}</h2>
+        <p>{t("about.text1")}</p>
+        <p>{t("about.text2")}</p>
+      </div>
+
+      <Carousel
+        className="about-carousel"
+        label={t("about.carouselLabel")}
+        prevLabel={t("common.prevSlide")}
+        nextLabel={t("common.nextSlide")}
+        dotLabel={(i) => `${t("about.carouselLabel")} ${i + 1}`}
+        autoPlay
+        slides={slides}
+      />
+    </Container>
   );
 };

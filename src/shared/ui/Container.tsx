@@ -1,14 +1,16 @@
 import { cn } from "@/shared/lib";
 
-/** Ширина и боковые поля страницы: 1120px и отступы как в лендинге. */
+/** Ширина и боковые поля страницы — класс .container из перенесённых стилей. */
 export const Container = ({
+  id,
   className,
   children,
 }: {
+  id?: string;
   className?: string;
   children: React.ReactNode;
 }) => (
-  <div className={cn("mx-auto w-full max-w-container px-5 sm:px-8 lg:px-12", className)}>
+  <div id={id} className={cn("container", className)}>
     {children}
   </div>
 );

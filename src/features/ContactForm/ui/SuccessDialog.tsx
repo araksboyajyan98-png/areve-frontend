@@ -72,7 +72,7 @@ export const SuccessDialog = ({ onClose }: { onClose: () => void }) => {
 
   return (
     <div
-      className="fixed inset-0 z-[999] flex items-center justify-center bg-ink/60 p-6"
+      className="popup-overlay"
       onMouseDown={(e) => {
         pressedOverlay.current = e.target === e.currentTarget;
       }}
@@ -86,15 +86,15 @@ export const SuccessDialog = ({ onClose }: { onClose: () => void }) => {
         role="dialog"
         aria-modal="true"
         aria-labelledby="success-title"
-        className="max-w-md rounded-card bg-canvas p-8 text-center shadow-2xl"
+        className="popup-card"
       >
-        <h3 id="success-title" className="font-heading text-xl">
+        <h3 id="success-title">
           {t("popup.title")}
         </h3>
 
-        <p className="mt-3 text-ink-soft">{t("popup.text")}</p>
+        <p>{t("popup.text")}</p>
 
-        <Button ref={closeRef} type="button" onClick={onClose} className="mt-6">
+        <Button ref={closeRef} type="button" onClick={onClose}>
           {t("popup.close")}
         </Button>
       </div>

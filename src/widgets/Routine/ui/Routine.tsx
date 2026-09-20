@@ -1,5 +1,5 @@
 import { useT } from "@/shared/i18n";
-import { Card, Container, IconBadge, Section, SectionHead } from "@/shared/ui";
+import { Container, Section, SectionHead } from "@/shared/ui";
 import { ROUTINE } from "../config/routine";
 
 export const Routine = () => {
@@ -10,20 +10,21 @@ export const Routine = () => {
       <Container>
         <SectionHead title={t("routine.title")} />
 
-        <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="routine-grid">
           {ROUTINE.map(({ Icon, title, text }) => (
-            /* Список нумерованный: это последовательность дня, а не набор карточек. */
-            <li key={title}>
-              <Card className="h-full">
-                <IconBadge>
-                  <Icon className="h-6 w-6" />
-                </IconBadge>
-                <h3 className="text-lg">{t(title)}</h3>
-                <p className="mt-2 text-sm text-ink-soft">{t(text)}</p>
-              </Card>
-            </li>
+            /*
+             * Кружок под иконкой чередует цвет по чётности карточки —
+             * это делает CSS через :nth-child, разметке знать не нужно.
+             */
+            <div className="routine-card" key={title}>
+              <div className="icon-badge">
+                <Icon />
+              </div>
+              <h3>{t(title)}</h3>
+              <p>{t(text)}</p>
+            </div>
           ))}
-        </ol>
+        </div>
       </Container>
     </Section>
   );

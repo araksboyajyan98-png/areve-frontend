@@ -3,51 +3,56 @@
 @tailwind utilities;
 
 /*
- * Палитра перенесена из areve-mankapartez.html.
- * Формат "R G B" без rgb(), чтобы работала прозрачность: bg-canvas/50.
- * Новый цвет добавляется в обе темы и в tailwind.config.js.
+ * Стили перенесены из areve-mankapartezupdated.html как есть — вместе
+ * с именами переменных и классов. Так совпадение с оригиналом точное
+ * по построению, а не по внимательности переводившего.
+ *
+ * Правило: меняется вид — меняется этот файл, а не классы Tailwind
+ * в разметке. Разметка держит структуру, файл держит вид.
  */
+
 @layer base {
   :root,
   :root[data-theme="light"] {
-    --color-canvas: 250 247 239; /* #FAF7EF cream */
-    --color-canvas-tint: 238 228 206; /* #EEE4CE cream-deep */
-    --color-surface: 255 253 248; /* #FFFDF8 white */
-    --color-ink: 55 50 43; /* #37322B */
-    --color-ink-soft: 110 100 85; /* #6E6455 */
-    --color-line: 222 210 183; /* #DED2B7 */
-    --color-accent: 201 122 72; /* #C97A48 orange */
-    --color-accent-deep: 168 94 53; /* #A85E35 orange-deep */
-    --color-sage: 139 148 115; /* #8B9473 */
-    --color-sage-deep: 105 116 90; /* #69745A */
+    --cream: #faf7ef;
+    --cream-deep: #eee4ce;
+    --white: #fffdf8;
+    --ink: #37322b;
+    --ink-soft: #6e6455;
+    --orange: #c97a48;
+    --orange-deep: #a85e35;
+    --sage: #8b9473;
+    --sage-deep: #69745a;
+    --line: #ded2b7;
+    --card-radius: 20px;
+    --container: 1120px;
+    /* фон шапки: у оригинала он чуть теплее, чем --cream */
+    --header-bg: rgba(246, 241, 230, 0.92);
+    /* заливка выделенного тарифа — отдельный цвет, не --sage-deep */
+    --plan-solid: #767e62;
     color-scheme: light;
   }
 
   /*
-   * Тёмная тема НЕ решена — см. fe/docs/architecture.md, раздел 13.
-   * Значения намеренно повторяют светлые: механизм из скелета на месте,
-   * но пока никто не выбрал тёмный вариант тёплой кремовой палитры,
-   * показывать самодельный было бы хуже, чем не показывать ничего.
-   * Когда решение будет — меняются только значения в этом блоке.
+   * Тёмная тема не решена: значения намеренно повторяют светлые.
+   * Тёплая кремовая палитра тёмного варианта не имеет, а придумывать его
+   * на глаз хуже, чем не показывать вовсе. Механизм на месте — когда
+   * палитру выберут, меняется только этот блок.
    */
   :root[data-theme="dark"] {
-    --color-canvas: 250 247 239;
-    --color-canvas-tint: 238 228 206;
-    --color-surface: 255 253 248;
-    --color-ink: 55 50 43;
-    --color-ink-soft: 110 100 85;
-    --color-line: 222 210 183;
-    --color-accent: 201 122 72;
-    --color-accent-deep: 168 94 53;
-    --color-sage: 139 148 115;
-    --color-sage-deep: 105 116 90;
+    --cream: #faf7ef;
+    --cream-deep: #eee4ce;
+    --white: #fffdf8;
+    --ink: #37322b;
+    --ink-soft: #6e6455;
+    --orange: #c97a48;
+    --orange-deep: #a85e35;
+    --sage: #8b9473;
+    --sage-deep: #69745a;
+    --line: #ded2b7;
+    --header-bg: rgba(246, 241, 230, 0.92);
+    --plan-solid: #767e62;
     color-scheme: light;
-  }
-
-  html,
-  body,
-  #root {
-    height: 100%;
   }
 
   html {
@@ -55,16 +60,33 @@
   }
 
   body {
-    margin: 0;
-    background-color: rgb(var(--color-canvas));
-    color: rgb(var(--color-ink));
-    @apply font-sans leading-relaxed antialiased;
+    font-family: "Noto Sans Armenian", sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
 
   h1,
   h2,
   h3 {
-    @apply font-heading font-semibold leading-tight;
+    font-family: "Noto Serif Armenian", serif;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+
+  img,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  ul {
+    list-style: none;
   }
 
   /* Кому важно меньше движения — убираем плавную прокрутку по якорям. */
@@ -72,5 +94,1090 @@
     html {
       scroll-behavior: auto;
     }
+  }
+}
+
+@layer components {
+  .container {
+    max-width: var(--container);
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
+  }
+  @media (min-width: 1200px) {
+    .container {
+      padding-inline: clamp(48px, 5vw - 12px, 78px);
+    }
+  }
+
+  .section {
+    padding-block: clamp(3.25rem, 7vw, 5.5rem);
+  }
+  .section-tint {
+    background: var(--cream-deep);
+  }
+
+  .section-head {
+    max-width: 42rem;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  .section-head p {
+    color: var(--ink-soft);
+    margin-top: 0.6rem;
+    max-width: 38ch;
+  }
+  .section-head h2,
+  .about-text h2 {
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+  }
+
+  /* ---------- кнопки ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: clamp(0.5rem, 1.4vw, 0.75rem) clamp(1rem, 2.8vw, 1.6rem);
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+    text-decoration: none;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    font-family: "Noto Sans Armenian", sans-serif;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--orange-deep);
+    color: var(--white);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -10px rgba(181, 102, 58, 0.55);
+  }
+  .btn-white {
+    background: var(--white);
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+  .btn-white:hover {
+    background: var(--orange-deep);
+    color: var(--white);
+    border-color: var(--orange-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -10px rgba(181, 102, 58, 0.55);
+  }
+  .btn-ghost {
+    background: transparent;
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+  .btn-ghost:hover {
+    background: var(--orange-deep);
+    border-color: var(--orange-deep);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -10px rgba(181, 102, 58, 0.55);
+  }
+  .btn-on-dark {
+    background: var(--cream);
+    color: var(--sage-deep);
+  }
+  .btn-on-dark:hover {
+    transform: translateY(-2px);
+  }
+  .btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Движение при наведении — только если человек не просил его убрать. */
+  @media (prefers-reduced-motion: reduce) {
+    .btn,
+    .btn:hover {
+      transform: none;
+      transition: background 0.15s ease;
+    }
+  }
+
+  /* ---------- шапка ---------- */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--header-bg);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 0.9rem;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    text-decoration: none;
+  }
+  .logo-wordmark {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+  }
+  .logo-wordmark-footer {
+    height: 49px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.87rem;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    margin-right: 1.6rem;
+  }
+  .nav-links a:last-child {
+    margin-right: 0;
+  }
+  @media (max-width: 1000px) {
+    .nav-links a {
+      margin-right: 0.9rem;
+    }
+  }
+  .nav-links a:hover {
+    color: var(--orange-deep);
+  }
+
+  .nav-burger {
+    display: none;
+    cursor: pointer;
+    padding: 10px;
+    background: none;
+    border: none;
+  }
+  .nav-burger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--ink);
+    margin: 5px 0;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 640px) {
+    .nav-links {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      background: var(--cream);
+      border-bottom: 1px solid var(--line);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.25s ease;
+    }
+    .nav-links a {
+      padding: 0.85rem clamp(1.25rem, 4vw, 3rem);
+      width: 100%;
+      border-top: 1px solid var(--line);
+      margin-right: 0;
+      box-sizing: border-box;
+    }
+    /* В оригинале открывал чекбокс; здесь — состояние React. */
+    .nav-links.open {
+      max-height: 22rem;
+    }
+    .nav-burger {
+      display: block;
+    }
+    .nav-cta {
+      display: none;
+    }
+  }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(3.5rem, 9vw, 6.5rem) clamp(3rem, 7vw, 5rem);
+  }
+  .hero .container {
+    padding-left: 60px;
+    margin-left: 0;
+  }
+  .hero-sun {
+    position: absolute;
+    top: 4%;
+    right: -25%;
+    width: min(572px, 62.4vw);
+    opacity: 0.35;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-sun {
+      animation: spin 140s linear infinite;
+    }
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .hero-grid {
+    display: flex;
+    align-items: center;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    position: relative;
+  }
+  .hero-inner {
+    position: relative;
+    flex: 1 1 0;
+    max-width: 34rem;
+    text-align: left;
+  }
+  .hero-image {
+    flex: 1 1 0;
+    min-width: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    aspect-ratio: 4/5;
+  }
+  .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  @media (min-width: 901px) {
+    .hero {
+      padding-block: 80px;
+    }
+    .hero .container {
+      max-width: none;
+      padding-left: 80px;
+      padding-right: 80px;
+    }
+  }
+  @media (min-width: 901px) and (max-width: 1300px) {
+    .hero-inner h1 {
+      font-size: clamp(32px, 1vw + 23px, 36px);
+    }
+    .hero-inner p {
+      font-size: 17px;
+    }
+    .hero-image {
+      flex: none;
+      width: clamp(290px, 42.5vw - 92.5px, 460px);
+      margin-left: auto;
+    }
+  }
+  @media (min-width: 1301px) {
+    .hero-inner h1 {
+      font-size: 40px;
+    }
+    .hero-inner p {
+      font-size: clamp(18px, 1vw, 19px);
+    }
+  }
+  @media (min-width: 1300px) {
+    .hero-grid {
+      gap: 4rem;
+    }
+    .hero-image {
+      flex: none;
+      width: clamp(460px, 12vw + 304px, 520px);
+      margin-left: auto;
+    }
+  }
+  .hero-inner h1 {
+    font-size: clamp(1.875rem, 5vw, 2.75rem);
+    text-transform: uppercase;
+  }
+  .accent-word {
+    font-style: italic;
+    color: var(--orange-deep);
+    display: inline-block;
+    transform: skewX(-8deg);
+  }
+  .hero-inner p {
+    margin-top: 1.1rem;
+    font-size: 1.08rem;
+    color: var(--ink-soft);
+    max-width: 34rem;
+  }
+  .hero-tag {
+    display: block;
+    font-size: clamp(0.92rem, 2vw, 1.1rem);
+    font-weight: 600;
+    color: var(--sage-deep);
+    margin-top: 1.6rem;
+    margin-bottom: 0.8rem;
+    text-align: left;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: nowrap;
+  }
+
+  @media (min-width: 721px) and (max-width: 900px) {
+    .hero-inner h1 {
+      font-size: 22px;
+    }
+    .hero-inner p {
+      font-size: 14px;
+    }
+    .hero-image {
+      flex: none;
+      width: clamp(250px, 22.2vw + 90px, 290px);
+    }
+  }
+  @media (max-width: 720px) {
+    .hero .container {
+      padding-left: 32px;
+    }
+    .hero-grid {
+      flex-direction: column;
+    }
+    .hero-inner {
+      width: 100%;
+    }
+    .hero-inner h1 {
+      font-size: 18px;
+    }
+    .hero-inner p {
+      font-size: 12px;
+    }
+    .hero-image {
+      flex: none;
+      width: clamp(220px, 78vw, 420px);
+      margin-inline: auto;
+      margin-top: 2rem;
+      aspect-ratio: 5/4;
+    }
+    .hero-sun {
+      top: -4%;
+      right: -32%;
+      width: min(260px, 62vw);
+      opacity: 0.32;
+    }
+  }
+  @media (max-width: 420px) {
+    .hero .container {
+      padding-left: 20px;
+    }
+    .hero-inner h1 {
+      font-size: 15px;
+    }
+    .hero-inner p {
+      font-size: 11px;
+    }
+    .hero-sun {
+      top: -6%;
+      right: -38%;
+      width: min(190px, 58vw);
+      opacity: 0.28;
+    }
+    .hero-actions {
+      gap: 0.5rem;
+    }
+    .hero-actions .btn {
+      font-size: 11px;
+      padding: 0.45rem 0.55rem;
+    }
+  }
+
+  /* ---------- о нас ---------- */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 3.5rem);
+    align-items: center;
+  }
+  .about-text p {
+    color: var(--ink-soft);
+    margin-top: 1rem;
+    max-width: 48ch;
+  }
+  .about-carousel {
+    position: relative;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    aspect-ratio: 4/3.1;
+  }
+  .carousel-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-track {
+      transition: none;
+    }
+  }
+  .carousel-slide {
+    min-width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.2rem;
+  }
+  .carousel-slide svg {
+    width: 100%;
+    height: 100%;
+  }
+  .carousel-slide.photo {
+    padding: 0;
+  }
+  .carousel-slide.photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 253, 248, 0.88);
+    color: var(--ink);
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px -5px rgba(0, 0, 0, 0.3);
+  }
+  .carousel-arrow:hover {
+    background: var(--white);
+  }
+  .carousel-arrow.prev {
+    left: 0.7rem;
+  }
+  .carousel-arrow.next {
+    right: 0.7rem;
+  }
+  .carousel-dots {
+    position: absolute;
+    bottom: 0.8rem;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 0.45rem;
+  }
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    padding: 9px;
+    margin: -9px;
+    background-clip: content-box;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--line);
+    cursor: pointer;
+  }
+  .carousel-dot.active {
+    width: 20px;
+    border-radius: 5px;
+    background-color: var(--orange-deep);
+  }
+
+  @media (max-width: 840px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+    .about-carousel {
+      order: -1;
+    }
+    .about-text p {
+      max-width: none;
+    }
+  }
+
+  /* Отступ блока ценностей внутри секции «о нас» — как в оригинале. */
+  .values-block {
+    margin-top: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  /* ---------- ценности ---------- */
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.1rem;
+  }
+  .value-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 1.6rem 1.4rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease,
+      background 0.25s ease, color 0.2s ease;
+  }
+  .value-card:hover {
+    border-color: var(--orange-deep);
+    background: var(--orange-deep);
+    transform: translateY(-6px);
+    box-shadow: 0 18px 30px -14px rgba(0, 0, 0, 0.28), 0 0 34px rgba(201, 122, 72, 0.5);
+  }
+  .value-card:hover svg {
+    color: var(--white);
+  }
+  .value-card:hover h3 {
+    color: var(--white);
+  }
+  .value-card:hover p {
+    color: rgba(255, 255, 255, 0.88);
+  }
+  .value-card svg {
+    width: 34px;
+    height: 34px;
+    color: var(--orange-deep);
+    margin-bottom: 0.9rem;
+    transition: color 0.2s ease;
+  }
+  .value-card h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    transition: color 0.2s ease;
+  }
+  .value-card p {
+    margin-top: 0.5rem;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    transition: color 0.2s ease;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .value-card:hover {
+      transform: none;
+    }
+  }
+  @media (max-width: 900px) {
+    .values-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .values-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ---------- распорядок дня ---------- */
+  .routine-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.1rem;
+  }
+  .routine-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--card-radius);
+    padding: 1.5rem 1.3rem;
+  }
+  .routine-card .icon-badge {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.9rem;
+  }
+  .routine-card .icon-badge svg {
+    width: 24px;
+    height: 24px;
+  }
+  /* Кружки чередуются: оранжевый, зелёный, оранжевый… */
+  .routine-card:nth-child(odd) .icon-badge {
+    background: rgba(201, 122, 72, 0.15);
+    color: var(--orange-deep);
+  }
+  .routine-card:nth-child(even) .icon-badge {
+    background: rgba(139, 148, 115, 0.18);
+    color: var(--sage-deep);
+  }
+  .routine-card h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-top: 0.1rem;
+  }
+  .routine-card p {
+    margin-top: 0.3rem;
+    color: var(--ink-soft);
+    font-size: 0.96rem;
+  }
+  @media (max-width: 900px) {
+    .routine-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .routine-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ---------- тарифы ---------- */
+  .plans-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.4rem;
+  }
+  .plan-card {
+    border-radius: var(--card-radius);
+    padding: 2rem 1.8rem;
+    border: 1px solid var(--line);
+  }
+  .plan-card.tint {
+    background: var(--white);
+  }
+  .plan-card.solid {
+    background: var(--plan-solid);
+    color: var(--white);
+    border-color: transparent;
+  }
+  .plan-card h3 {
+    font-size: 1.3rem;
+  }
+  .plan-card .hours {
+    margin-top: 0.3rem;
+    font-weight: 600;
+    opacity: 0.85;
+  }
+  .plan-card ul {
+    margin-top: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+  .plan-card li {
+    display: flex;
+    gap: 0.6rem;
+    font-size: 0.95rem;
+  }
+  .plan-card .btn {
+    margin-top: 1.6rem;
+  }
+  @media (max-width: 720px) {
+    .plans-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ---------- баннер адаптации ---------- */
+  .adapt {
+    background: linear-gradient(
+        100deg,
+        var(--sage-deep) 0%,
+        var(--sage-deep) 40%,
+        rgba(105, 116, 90, 0.72) 52%,
+        rgba(105, 116, 90, 0.4) 66%,
+        rgba(105, 116, 90, 0.2) 85%
+      ),
+      url("/images/adaptation-bg.webp") center center/cover no-repeat,
+      var(--sage-deep);
+    color: var(--cream);
+    padding-block: clamp(2.2rem, 5vw, 3.5rem);
+  }
+  .adapt-body {
+    display: flex;
+    flex-direction: column;
+  }
+  .adapt-body h3 {
+    font-size: clamp(2rem, 4.6vw, 2.9rem);
+    color: var(--white);
+    font-family: "Noto Serif Armenian", serif;
+    line-height: 1.15;
+    text-transform: uppercase;
+  }
+  .adapt-tag {
+    margin-top: 0.6rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    opacity: 0.9;
+  }
+  .adapt-body p {
+    margin-top: 1rem;
+    opacity: 0.92;
+  }
+  .adapt-body .btn {
+    margin-top: 1.4rem;
+    align-self: flex-end;
+  }
+
+  /* ---------- отзывы ---------- */
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+  .testi-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--card-radius);
+    padding: 1.8rem 1.6rem;
+  }
+  .testi-mark {
+    font-family: "Noto Serif Armenian", serif;
+    font-size: 2.4rem;
+    color: var(--orange);
+    line-height: 1;
+  }
+  .testi-card p {
+    margin-top: 0.6rem;
+    color: var(--ink);
+  }
+  .testi-card footer {
+    margin-top: 1.1rem;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+  .trio-wrap {
+    position: relative;
+  }
+  @media (max-width: 900px) {
+    .testi-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ---------- питание ---------- */
+  .nutrition-head {
+    max-width: none;
+  }
+  .nutrition-head p {
+    max-width: none;
+  }
+  .nutrition-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2.4rem;
+  }
+  .nutrition-gallery figure {
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    overflow: hidden;
+    aspect-ratio: 1.5;
+  }
+  .nutrition-gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  @media (max-width: 640px) {
+    .nutrition-gallery {
+      grid-template-columns: 1fr 1fr;
+    }
+    .nutrition-gallery figure:nth-child(3) {
+      grid-column: 1/3;
+    }
+  }
+  .nutrition-grid {
+    margin-top: 2rem;
+  }
+  .menu-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 1.8rem;
+  }
+  .menu-card h3 {
+    font-size: 1.05rem;
+  }
+  .menu-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.75rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.94rem;
+  }
+  .menu-row:first-of-type {
+    border-top: none;
+    margin-top: 0.9rem;
+  }
+  .menu-row .meal {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .menu-row .food {
+    color: var(--ink-soft);
+    text-align: right;
+  }
+
+  /* ---------- контакты ---------- */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 3.5rem);
+  }
+  .info-list {
+    margin-top: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .info-list li {
+    display: flex;
+    gap: 0.8rem;
+    font-size: 0.96rem;
+  }
+  .info-list svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--orange-deep);
+    margin-top: 0.1rem;
+  }
+  .map-box {
+    margin-top: 1.6rem;
+    height: 150px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--cream-deep);
+    border: 1px solid var(--line);
+  }
+  .map-box iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+  .map-link {
+    margin-top: 0.7rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--orange-deep);
+  }
+  .map-link:hover {
+    text-decoration: underline;
+  }
+  .map-link svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .contact-form label {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.35rem;
+    display: block;
+  }
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    padding: 0.8rem 0.9rem;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: var(--white);
+    font-family: "Noto Sans Armenian", sans-serif;
+    font-size: 0.96rem;
+    color: var(--ink);
+  }
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    opacity: 0.6;
+  }
+  .contact-form textarea {
+    min-height: 110px;
+    resize: vertical;
+  }
+  .contact-form .btn {
+    align-self: flex-start;
+    margin-top: 0.3rem;
+  }
+  .field-error {
+    margin-top: 0.35rem;
+    font-size: 0.85rem;
+    color: var(--orange-deep);
+  }
+  /* Ловушка для ботов: убрана с глаз, но не display:none — иначе часть
+     ботов её распознаёт и пропускает. */
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+
+  @media (max-width: 840px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+    .nutrition-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ---------- подвал ---------- */
+  .site-footer {
+    background: var(--orange-deep);
+    color: var(--cream);
+    padding-block: 2.6rem;
+  }
+  .footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+  }
+  .footer-links {
+    display: flex;
+    gap: 1.4rem;
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    text-decoration: none;
+    font-size: 0.9rem;
+    color: rgba(255, 253, 248, 0.82);
+  }
+  .footer-links a:hover {
+    color: var(--cream);
+  }
+  .footer-social {
+    display: flex;
+    gap: 0.9rem;
+  }
+  .footer-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 253, 248, 0.14);
+    color: rgba(255, 253, 248, 0.9);
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .footer-social a:hover {
+    background: var(--cream);
+    color: var(--orange-deep);
+  }
+  .footer-social svg {
+    width: 18px;
+    height: 18px;
+  }
+  .footer-bottom {
+    margin-top: 1.8rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid rgba(255, 253, 248, 0.3);
+    font-size: 0.82rem;
+    color: rgba(255, 253, 248, 0.72);
+  }
+
+  /* ---------- окно благодарности ---------- */
+  .popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(55, 50, 43, 0.55);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .popup-card {
+    background: var(--cream);
+    border-radius: 20px;
+    padding: 2.2rem;
+    max-width: 26rem;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  }
+  .popup-card h3 {
+    font-family: "Noto Serif Armenian", serif;
+    margin-bottom: 0.8rem;
+    font-size: 1.4rem;
+  }
+  .popup-card p {
+    color: var(--ink-soft);
+    margin-bottom: 1.4rem;
+    line-height: 1.6;
+  }
+
+  /* Экран, который показывается, если что-то упало при отрисовке. */
+  .error-screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--ink-soft);
+  }
+
+  /* Ссылка «к содержимому»: видна только под фокусом. */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    z-index: 100;
+  }
+  .skip-link:focus {
+    left: 1rem;
+    top: 1rem;
+    background: var(--orange-deep);
+    color: var(--white);
+    padding: 0.75rem 1.25rem;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+}
+
+@layer base {
+  /* Видимый фокус — одинаковый по всему сайту. */
+  .btn:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  button:focus-visible {
+    outline: 3px solid var(--orange-deep);
+    outline-offset: 2px;
+  }
+
+  /* Якоря не должны уезжать под липкую шапку. */
+  #hero,
+  #about,
+  #routine,
+  #terms,
+  #testimonials,
+  #nutrition,
+  #contact {
+    scroll-margin-top: 90px;
   }
 }

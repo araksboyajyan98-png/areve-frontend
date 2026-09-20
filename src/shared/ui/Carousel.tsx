@@ -16,8 +16,17 @@ const subscribeToMotionSetting = (onChange: () => void) => {
 
 const readMotionSetting = () => window.matchMedia(REDUCED_MOTION).matches;
 
+/** Сколько пикселей нужно провести пальцем, чтобы это считалось листанием. */
+const SWIPE_THRESHOLD = 50;
+
+export interface CarouselSlide {
+  content: React.ReactNode;
+  /** Фотография занимает слайд целиком, рисунок — с отступами. */
+  photo?: boolean;
+}
+
 interface CarouselProps {
-  /** Чем это является для скринридера: «фотографии», «отзывы». */
+  /** Чем это является для скринридера. */
   label: string;
   prevLabel: string;
   nextLabel: string;
@@ -25,25 +34,16 @@ interface CarouselProps {
   dotLabel?: (index: number) => string;
   /** Листать само. Выключается при prefers-reduced-motion. */
   autoPlay?: boolean;
+  /** По умолчанию 4500 мс — как в оригинале. */
   autoPlayMs?: number;
   className?: string;
-  slideClassName?: string;
-  children: React.ReactNode[];
+  slides: readonly CarouselSlide[];
 }
 
-const ARROW =
-  "absolute top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full " +
-  "border border-line bg-surface/90 text-lg leading-none text-ink " +
-  "hover:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 " +
-  "focus-visible:outline-accent-deep";
-
-/** Сколько пикселей нужно провести пальцем, чтобы это считалось листанием. */
-const SWIPE_THRESHOLD = 50;
-
 /**
- * Одна карусель на два места: фотографии центра и галерея питания.
- * Слайды лежат в ряд и сдвигаются трансформацией — двигается композитный слой,
- * без пересчёта разметки на каждый кадр.
+ * Карусель фотографий. Вид — классы .carousel-* из перенесённых стилей:
+ * слайды лежат в ряд и сдвигаются трансформацией, без пересчёта разметки
+ * на каждый кадр.
  */
 export const Carousel = ({
   label,
@@ -51,12 +51,11 @@ export const Carousel = ({
   nextLabel,
   dotLabel,
   autoPlay = false,
-  autoPlayMs = 5000,
+  autoPlayMs = 4500,
   className,
-  slideClassName,
-  children,
+  slides,
 }: CarouselProps) => {
-  const count = children.length;
+  const count = slides.length;
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
 
@@ -70,7 +69,12 @@ export const Carousel = ({
 
     const timer = setInterval(() => setIndex((i) => (i + 1) % count), autoPlayMs);
     return () => clearInterval(timer);
-  }, [autoPlay, paused, reducedMotion, count, autoPlayMs]);
+    /*
+     * index в зависимостях намеренно: отсчёт начинается заново после каждого
+     * перехода, в том числе по стрелке или точке. Так в оригинале — иначе
+     * слайд, пролистанный вручную, мог бы смениться через долю секунды.
+     */
+  }, [autoPlay, paused, reducedMotion, count, autoPlayMs, index]);
 
   // Листание пальцем: на телефоне его пробуют раньше, чем ищут стрелки.
   const touchStartX = useRef<number | null>(null);
@@ -94,7 +98,7 @@ export const Carousel = ({
       role="region"
       aria-roledescription="carousel"
       aria-label={label}
-      className={cn("relative", className)}
+      className={className}
       // Пауза, пока смотрят или ведут по ней с клавиатуры.
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
@@ -103,27 +107,21 @@ export const Carousel = ({
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
-      <div className="overflow-hidden rounded-card">
-        <div
-          className="flex motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out"
-          style={{ transform: `translateX(-${index * 100}%)` }}
-        >
-          {children.map((slide, i) => (
-            <div
-              key={i}
-              className={cn("w-full shrink-0", slideClassName)}
-              /*
-               * inert, а не только aria-hidden: он и от скринридера прячет,
-               * и убирает содержимое из обхода по Tab. С одним aria-hidden
-               * ссылка внутри скрытого слайда получала бы фокус, оставаясь
-               * невидимой — человек с клавиатуры оказывался бы неизвестно где.
-               */
-              inert={i !== index}
-            >
-              {slide}
-            </div>
-          ))}
-        </div>
+      <div className="carousel-track" style={{ transform: `translateX(-${index * 100}%)` }}>
+        {slides.map((slide, i) => (
+          <div
+            key={i}
+            className={cn("carousel-slide", slide.photo && "photo")}
+            /*
+             * inert, а не aria-hidden: он и от скринридера прячет, и убирает
+             * содержимое из обхода по Tab. С одним aria-hidden ссылка внутри
+             * скрытого слайда получала бы фокус, оставаясь невидимой.
+             */
+            inert={i !== index}
+          >
+            {slide.content}
+          </div>
+        ))}
       </div>
 
       {count > 1 && (
@@ -132,7 +130,7 @@ export const Carousel = ({
             type="button"
             aria-label={prevLabel}
             onClick={() => go(index - 1)}
-            className={cn(ARROW, "left-2")}
+            className="carousel-arrow prev"
           >
             ‹
           </button>
@@ -140,7 +138,7 @@ export const Carousel = ({
             type="button"
             aria-label={nextLabel}
             onClick={() => go(index + 1)}
-            className={cn(ARROW, "right-2")}
+            className="carousel-arrow next"
           >
             ›
           </button>
@@ -148,19 +146,15 @@ export const Carousel = ({
       )}
 
       {dotLabel && count > 1 && (
-        <div className="mt-4 flex justify-center gap-2">
-          {children.map((_, i) => (
+        <div className="carousel-dots">
+          {slides.map((_, i) => (
             <button
               key={i}
               type="button"
               aria-label={dotLabel(i)}
               aria-current={i === index}
               onClick={() => go(i)}
-              className={cn(
-                "h-2.5 w-2.5 rounded-full transition-colors",
-                "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-deep",
-                i === index ? "bg-accent-deep" : "bg-line hover:bg-ink-soft"
-              )}
+              className={cn("carousel-dot", i === index && "active")}
             />
           ))}
         </div>
