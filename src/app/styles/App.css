@@ -1120,7 +1120,9 @@
   }
   .footer-links a {
     text-decoration: none;
-    font-size: 0.9rem;
+    /* Было 0.9rem (14.4px) — уменьшено на 2.4px: карта сайта не должна
+       спорить по весу с подписью соцсетей рядом. */
+    font-size: 0.75rem;
     color: rgba(255, 253, 248, 0.82);
   }
   .footer-links a:hover {
