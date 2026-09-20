@@ -745,10 +745,17 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 1.4rem;
   }
+  /*
+   * Карточка тарифа по присланному макету: скругление крупнее обычного
+   * (24px при ширине 239 — десятая часть ширины), без рамки, заливка светлая.
+   * Остальные карточки сайта остаются с рамкой — так было в оригинале.
+   */
   .plan-card {
-    border-radius: var(--card-radius);
+    display: flex;
+    flex-direction: column;
+    border: none;
+    border-radius: 28px;
     padding: 2rem 1.8rem;
-    border: 1px solid var(--line);
   }
   .plan-card.tint {
     background: var(--white);
@@ -757,28 +764,32 @@
   .plan-card.solid {
     background: var(--orange-deep);
     color: var(--white);
-    border-color: transparent;
   }
   .plan-card h3 {
     font-size: 1.3rem;
   }
   /*
-   * Время — главное, чем тарифы отличаются друг от друга, поэтому оно
-   * набрано крупно и тем же шрифтом, что заголовки.
+   * Время — главное, чем тарифы отличаются друг от друга. В макете оно
+   * вынесено в заливную плашку; шрифт заголовочный, чтобы цифры читались
+   * крупно и уверенно.
    */
   .plan-card .hours {
-    margin-top: 0.4rem;
-    font-family: "Noto Serif Armenian", serif;
-    font-size: clamp(1.45rem, 2.6vw, 1.85rem);
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-  }
-  .plan-card.tint .hours {
-    color: var(--orange-deep);
-  }
-  .plan-card.solid .hours {
+    align-self: flex-start;
+    margin-top: 0.9rem;
+    padding: 0.55rem 1.2rem;
+    border-radius: 999px;
+    background: var(--orange-deep);
     color: var(--white);
+    font-family: "Noto Serif Armenian", serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.25;
+    white-space: nowrap;
+  }
+  /* На оранжевой карточке плашка выворачивается, иначе сливается с фоном. */
+  .plan-card.solid .hours {
+    background: var(--cream);
+    color: var(--orange-deep);
   }
   /*
    * На оранжевой карточке обычное наведение светлой кнопки залило бы её

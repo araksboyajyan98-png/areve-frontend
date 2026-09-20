@@ -11,21 +11,21 @@ export const terms = defineSection({
 
     // Короткий день: до обеда, без тихого часа.
     shortTitle: "Կես օրյա",
-    shortHours: "08:30 – 13:00",
+    shortHours: "08:30–13:00",
     shortItem1: "Ուսումնական պարապմունքներ",
     shortItem2: "Զբոսանք բակում",
     shortItem3: "Առանց քնելու",
 
     // Средний день: с тихим часом.
     mediumTitle: "Երկարացված",
-    mediumHours: "08:30 – 16:30",
+    mediumHours: "08:30–16:30",
     mediumItem1: "Ուսումնական պարապմունքներ և արվեստ",
     mediumItem2: "Զբոսանք բակում",
     mediumItem3: "Հանգստի ժամ",
 
     // Полный день.
     fullTitle: "Ամբողջ օրյա",
-    fullHours: "08:30 – 18:30",
+    fullHours: "08:30–18:30",
     fullItem1: "Ուսումնական պարապմունքներ և արվեստ",
     fullItem2: "Զբոսանք բակում",
     fullItem3: "Հանգստի ժամ",
