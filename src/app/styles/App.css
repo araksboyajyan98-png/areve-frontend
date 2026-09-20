@@ -390,9 +390,6 @@
     }
   }
   @media (min-width: 901px) and (max-width: 1300px) {
-    .hero-inner h1 {
-      font-size: clamp(32px, 1vw + 23px, 36px);
-    }
     .hero-inner p {
       font-size: 17px;
     }
@@ -403,9 +400,6 @@
     }
   }
   @media (min-width: 1301px) {
-    .hero-inner h1 {
-      font-size: 40px;
-    }
     .hero-inner p {
       font-size: clamp(18px, 1vw, 19px);
     }
@@ -420,8 +414,16 @@
       margin-left: auto;
     }
   }
+  /*
+   * Размер заголовка растёт вместе с экраном: 28px на узком телефоне,
+   * 40px на большом мониторе, между ними плавно.
+   *
+   * В оригинале вместо этого стояли пять значений по точкам излома,
+   * и на телефоне заголовок выходил 15px — мельче обычного текста,
+   * то есть переставал быть заголовком. Здесь одна шкала без скачков.
+   */
   .hero-inner h1 {
-    font-size: clamp(1.875rem, 5vw, 2.75rem);
+    font-size: clamp(1.75rem, 1.49rem + 1.13vw, 2.5rem);
     text-transform: uppercase;
   }
   .accent-word {
@@ -452,9 +454,6 @@
   }
 
   @media (min-width: 721px) and (max-width: 900px) {
-    .hero-inner h1 {
-      font-size: 22px;
-    }
     .hero-inner p {
       font-size: 14px;
     }
@@ -472,9 +471,6 @@
     }
     .hero-inner {
       width: 100%;
-    }
-    .hero-inner h1 {
-      font-size: 18px;
     }
     .hero-inner p {
       font-size: 12px;
@@ -496,9 +492,6 @@
   @media (max-width: 420px) {
     .hero .container {
       padding-left: 20px;
-    }
-    .hero-inner h1 {
-      font-size: 15px;
     }
     .hero-inner p {
       font-size: 11px;
