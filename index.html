@@ -12,6 +12,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/favicon-180.png" />
 
+    <!--
+      Домен встречается ещё в public/robots.txt, public/sitemap.xml и ниже
+      в разметке организации. Меняется — меняется везде, это весь список.
+    -->
+    <link rel="canonical" href="https://arevecenter.am/" />
+
     <!-- Как ссылка выглядит в мессенджерах: родители делятся сайтом в WhatsApp. -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Արևէ" />
@@ -20,7 +26,23 @@
       property="og:description"
       content="1.5–6 տարեկան երեխաների համար։ Կես օրյա և ամբողջ օրյա ձևաչափեր, փոքր խմբեր, խաղով ուսուցում, 3-օրյա անվճար ադապտացիա։"
     />
-    <meta property="og:image" content="/images/hero.webp" />
+    <meta property="og:url" content="https://arevecenter.am/" />
+
+    <!--
+      Картинка отдельная, а не hero.webp, по двум причинам.
+      Во-первых, адрес абсолютный: Facebook и WhatsApp забирают её со своей
+      стороны, и относительный путь им не к чему привязать — превью выходит
+      пустым. Во-вторых, JPEG 1200×630: hero.webp — это 1120×896 в webp,
+      его обрезали бы как попало, а webp часть мессенджеров не показывает
+      до сих пор. Ради тега, который и нужен-то для пересылки в WhatsApp,
+      это решает дело.
+    -->
+    <meta property="og:image" content="https://arevecenter.am/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Երեխաներ խաղում են փայտե խորանարդիկներով" />
+
     <meta property="og:locale" content="hy_AM" />
     <meta name="twitter:card" content="summary_large_image" />
 
@@ -32,15 +54,18 @@
     />
 
     <!--
-      Разметка организации для поиска и карт. Адрес и телефоны настоящие.
-      Почта и координаты появятся, когда центр их даст, — без них
-      разметка остаётся верной, просто менее полной.
+      Разметка организации для поиска и карт. Адрес, телефоны и почта
+      настоящие. Координат нет: метка на карте ставится по строке адреса,
+      то есть примерно. Без них разметка верна, просто менее полна.
     -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "ChildCare",
         "name": "Արևէ",
+        "url": "https://arevecenter.am/",
+        "image": "https://arevecenter.am/og-image.jpg",
+        "email": "arevecenter@gmail.com",
         "description": "Նախադպրոցական կենտրոն 1.5–6 տարեկան երեխաների համար",
         "address": {
           "@type": "PostalAddress",

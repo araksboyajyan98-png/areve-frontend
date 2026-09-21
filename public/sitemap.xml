@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Одна страница — разделы внутри неё живут на якорях (#terms, #contact
+  и прочие), а якорь поиску отдельным адресом не является, поэтому
+  перечислять их здесь нечего.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://arevecenter.am/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

@@ -1,0 +1,5 @@
+# Сайт одностраничный и весь открыт для поиска.
+User-agent: *
+Allow: /
+
+Sitemap: https://arevecenter.am/sitemap.xml
