@@ -51,7 +51,7 @@ export const Footer = () => {
             </div>
           </div>
 
-          <nav className="footer-links">
+          <nav className="footer-links" aria-label={t("footer.sitemapAria")}>
             {LINKS.map((link) => (
               <a key={link.href} href={link.href}>
                 {t(link.key)}

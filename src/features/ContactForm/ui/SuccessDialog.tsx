@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 import { useT } from "@/shared/i18n";
 import { Button } from "@/shared/ui";
 
@@ -8,15 +8,33 @@ const FOCUSABLE = 'button, [href], input, textarea, select, [tabindex]:not([tabi
  * Окно благодарности. Показывается **только после ответа 201** — в лендинге
  * оно появлялось всегда, даже когда письмо никуда не уходило.
  */
-export const SuccessDialog = ({ onClose }: { onClose: () => void }) => {
+interface SuccessDialogProps {
+  onClose: () => void;
+  /**
+   * Куда вернуть фокус при закрытии — обычно кнопка «отправить».
+   * Читать document.activeElement здесь нельзя: окно появляется, пока кнопка
+   * ещё отключена отправкой, и активным элементом к этому моменту стало
+   * <body>. Фокус возвращался в никуда, и обход начинался с начала страницы.
+   */
+  returnFocusTo?: RefObject<HTMLElement | null>;
+}
+
+export const SuccessDialog = ({ onClose, returnFocusTo }: SuccessDialogProps) => {
   const t = useT();
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
-  /** Куда вернуть фокус: обычно это кнопка «отправить». */
-  const returnFocusTo = useRef<HTMLElement | null>(null);
+  /** Запасной вариант, если вызывающий не указал элемент. */
+  const previouslyFocused = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    returnFocusTo.current = document.activeElement as HTMLElement | null;
+    previouslyFocused.current = document.activeElement as HTMLElement | null;
+
+    /*
+     * Элемент запоминается сейчас, а не при уборке: форма ещё на странице,
+     * кнопка на месте, и ссылка на неё не изменится за время жизни окна.
+     */
+    const focusOnExit = returnFocusTo?.current ?? previouslyFocused.current;
+
     closeRef.current?.focus();
 
     /*
@@ -58,11 +76,15 @@ export const SuccessDialog = ({ onClose }: { onClose: () => void }) => {
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = scrollLock;
-      // Фокус возвращается туда, откуда пришёл, иначе он падает на <body>
-      // и следующий Tab начинает обход страницы заново.
-      returnFocusTo.current?.focus();
+
+      /*
+       * Фокус возвращается туда, откуда пришёл. Кнопка «отправить» к моменту
+       * закрытия снова включена, так что она его примет; <body> в запасном
+       * варианте отбрасывается — фокус на нём равносилен его потере.
+       */
+      if (focusOnExit && focusOnExit !== document.body) focusOnExit.focus();
     };
-  }, [onClose]);
+  }, [onClose, returnFocusTo]);
 
   /*
    * Закрывает только щелчок, начатый и законченный на подложке. Иначе

@@ -53,3 +53,11 @@ export const resources = Object.fromEntries(
 
 /** Коды ошибок, у которых есть перевод. */
 export const TRANSLATED_ERROR_CODES: ReadonlySet<string> = new Set(Object.keys(errors[LOCALES[0]]));
+
+/*
+ * Ключи разбора полей. Сервер кладёт в details[].message голый ключ —
+ * «name», «phone» — и форма дописывает к нему «validation.». Набор нужен,
+ * чтобы не дописать приставку к чему-то незнакомому: тогда родитель увидел
+ * бы под полем сам ключ вместо фразы.
+ */
+export const VALIDATION_KEYS: ReadonlySet<string> = new Set(Object.keys(validation[LOCALES[0]]));

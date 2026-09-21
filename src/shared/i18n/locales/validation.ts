@@ -6,7 +6,6 @@ import { defineSection } from "./defineSection";
  */
 export const validation = defineSection({
   hy: {
-    required: "Պարտադիր դաշտ",
     tooLong: "Չափազանց երկար",
     name: "Նշեք ձեր անունը",
     phone: "Նշեք վավեր հեռախոսահամար, օրինակ՝ +374 77 123 456",

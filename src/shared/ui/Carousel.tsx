@@ -57,7 +57,16 @@ export const Carousel = ({
 }: CarouselProps) => {
   const count = slides.length;
   const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
+
+  /*
+   * Причины остановки считаются раздельно. С одним флагом они гасили друг
+   * друга: человек ведёт по карусели с клавиатуры, мышь случайно проходит
+   * над ней и уходит — mouseleave снимает паузу, и слайд уезжает из-под
+   * того, кто его читает.
+   */
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const paused = hovered || focused;
 
   // Переключается без перезагрузки страницы — карусель должна замереть сразу.
   const reducedMotion = useSyncExternalStore(subscribeToMotionSetting, readMotionSetting);
@@ -100,10 +109,10 @@ export const Carousel = ({
       aria-label={label}
       className={className}
       // Пауза, пока смотрят или ведут по ней с клавиатуры.
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >

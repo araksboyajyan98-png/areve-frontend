@@ -30,7 +30,5 @@ export const contact = defineSection({
 
     submit: "Ուղարկել",
     submitting: "Ուղարկվում է…",
-    success: "Ուղարկվեց ✓",
-    successText: "Շնորհակալություն։ Կկապվենք ձեզ հետ մոտակա օրերին։",
   },
 });

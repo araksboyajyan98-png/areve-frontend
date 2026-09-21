@@ -3,6 +3,9 @@ import { defineSection } from "./defineSection";
 export const nav = defineSection({
   hy: {
     brandAria: "Արևէ, գլխավոր էջ",
+    /* Подпись к <nav>: на странице их два, и без подписи скринридер
+       объявляет оба одинаково — «навигация». */
+    mainAria: "Գլխավոր ընտրացանկ",
     /** Подпись под логотипом в шапке. */
     tagline: "Երեխաների զբաղմունքի կենտրոն",
     about: "Մեր մասին",

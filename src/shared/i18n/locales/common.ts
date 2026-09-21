@@ -9,7 +9,5 @@ export const common = defineSection({
     menuClose: "Փակել ընտրացանկը",
     prevSlide: "Նախորդ նկարը",
     nextSlide: "Հաջորդ նկարը",
-    prevReview: "Նախորդ կարծիքը",
-    nextReview: "Հաջորդ կարծիքը",
   },
 });

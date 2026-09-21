@@ -1,2 +1,3 @@
 export { cn } from "./cn";
-export { getErrorMessage } from "./getErrorMessage";
+export { getErrorMessage, getFieldErrors } from "./getErrorMessage";
+export type { FieldError } from "./getErrorMessage";

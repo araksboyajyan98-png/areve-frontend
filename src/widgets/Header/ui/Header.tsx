@@ -54,7 +54,11 @@ export const Header = () => {
           <span />
         </button>
 
-        <nav id="main-nav" className={cn("nav-links", open && "open")}>
+        <nav
+          id="main-nav"
+          aria-label={t("nav.mainAria")}
+          className={cn("nav-links", open && "open")}
+        >
           {LINKS.map((link) => (
             <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
               {t(link.key)}
@@ -66,12 +70,12 @@ export const Header = () => {
             стили, и граница 640px остаётся в одном месте. Скрытая ссылка
             убрана из обхода по Tab и от скринридера — display: none.
           */}
-          <a href="#contact" className="nav-cta nav-cta-wide" onClick={() => setOpen(false)}>
+          <a href="#contact" className="nav-cta-wide" onClick={() => setOpen(false)}>
             <strong>{t("nav.contact")}</strong>
           </a>
 
           {/* На телефоне «Կապ մեզ հետ» сразу набирает первый номер центра. */}
-          <a href={`tel:${PHONE_1_TEL}`} className="nav-cta nav-cta-phone" onClick={() => setOpen(false)}>
+          <a href={`tel:${PHONE_1_TEL}`} className="nav-cta-phone" onClick={() => setOpen(false)}>
             <strong>{t("nav.contact")}</strong>
           </a>
         </nav>

@@ -359,7 +359,15 @@
       border-bottom: 1px solid var(--line);
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.25s ease;
+      /*
+       * visibility, а не одна max-height. Нулевая высота прячет ссылки
+       * от глаза, но не от Tab: при закрытом меню обход уходил в невидимый
+       * список, и фокус на четыре нажатия пропадал с экрана.
+       * Переключение отложено на время сворачивания — иначе ссылки исчезали
+       * бы рывком, не дождавшись перехода.
+       */
+      visibility: hidden;
+      transition: max-height 0.25s ease, visibility 0s linear 0.25s;
     }
     .nav-links a {
       padding: 0.85rem clamp(1.25rem, 4vw, 3rem);
@@ -370,6 +378,8 @@
     /* В оригинале открывал чекбокс; здесь — состояние React. */
     .nav-links.open {
       max-height: 22rem;
+      visibility: visible;
+      transition: max-height 0.25s ease, visibility 0s linear 0s;
     }
     /* Кнопка меню — к правому краю, логотип под ней остаётся по центру. */
     /* flex, а не block: иначе раскладка чертей столбцом не включится. */
@@ -691,10 +701,6 @@
     align-items: center;
     justify-content: center;
     padding: 2.2rem;
-  }
-  .carousel-slide svg {
-    width: 100%;
-    height: 100%;
   }
   .carousel-slide.photo {
     padding: 0;
@@ -1024,7 +1030,8 @@
     display: flex;
     flex-direction: column;
   }
-  .adapt-body h3 {
+  /* h2 по смыслу, размер прежний — вид баннера не меняется. */
+  .adapt-body h2 {
     font-size: clamp(2rem, 4.6vw, 2.9rem);
     color: var(--white);
     font-family: "Noto Serif Armenian", serif;
@@ -1072,9 +1079,6 @@
     margin-top: 1.1rem;
     font-size: 0.88rem;
     color: var(--ink-soft);
-  }
-  .trio-wrap {
-    position: relative;
   }
   @media (max-width: 900px) {
     .testi-grid {
@@ -1258,9 +1262,6 @@
     .contact-grid {
       grid-template-columns: 1fr;
     }
-    .nutrition-grid {
-      grid-template-columns: 1fr;
-    }
   }
 
   /* ---------- подвал ---------- */
@@ -1434,7 +1435,16 @@
   #terms,
   #testimonials,
   #nutrition,
-  #contact {
+  #contact,
+  /*
+   * Цель ссылки «к содержимому»: без этой строки она прыгала под шапку.
+   * Обводку у #main снимаем — фокус попадает туда только по этой ссылке,
+   * и рамка вокруг всей страницы читалась бы как ошибка, а не как подсказка.
+   */
+  #main:focus {
+    outline: none;
+  }
+  #main {
     scroll-margin-top: calc(var(--header-height) + 12px);
   }
 }

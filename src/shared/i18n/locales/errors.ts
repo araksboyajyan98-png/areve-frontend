@@ -10,6 +10,7 @@ export const errors = defineSection({
     VALIDATION_FAILED: "Ստուգեք լրացված դաշտերը",
     NOT_FOUND: "Չի գտնվել",
     CONFLICT: "Հակասություն առկա տվյալների հետ",
+    FORBIDDEN: "Հարցումը մերժվել է",
     RATE_LIMITED: "Չափազանց շատ հարցումներ։ Փորձեք մի փոքր ուշ",
     INTERNAL: "Ինչ-որ բան այն չէ",
     submitFailed: "Չհաջողվեց ուղարկել հայտը",

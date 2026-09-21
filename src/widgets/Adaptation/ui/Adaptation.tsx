@@ -14,7 +14,12 @@ export const Adaptation = () => {
       <div className="adapt">
         <Container>
           <div className="adapt-body">
-            <h3>{t("adaptation.title")}</h3>
+            {/*
+              h2, а не h3: баннер — такой же раздел страницы, как соседние.
+              С h3 обход по заголовкам выдавал его вложенным в предыдущий
+              раздел, которому он не принадлежит.
+            */}
+            <h2>{t("adaptation.title")}</h2>
             <p className="adapt-tag">{t("adaptation.tag")}</p>
             <p>{t("adaptation.text")}</p>
 

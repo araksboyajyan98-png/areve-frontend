@@ -7,4 +7,4 @@ export { LOCALES, DEFAULT_LOCALE, isLocale } from "./model/locale";
 export type { Locale } from "./model/locale";
 
 export type { Dictionary } from "./locales";
-export { TRANSLATED_ERROR_CODES } from "./locales";
+export { TRANSLATED_ERROR_CODES, VALIDATION_KEYS } from "./locales";
